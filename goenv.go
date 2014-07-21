@@ -28,7 +28,7 @@ import (
 	"strings"
 )
 
-var template = `
+const template = `
 # This file must be used with "source bin/activate" or ". bin/activate"
 
 if [[ -n "${GOENV+1}" ]]; then

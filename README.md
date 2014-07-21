@@ -23,7 +23,7 @@ First, ensure your `PATH` includes the /bin directory in your global `GOPATH`, w
 PATH=PATH:$GOPATH/bin
 ```
 
-Install this package
+Install this package:
 
 ```
 $ go get github.com/crsmithdev/goenv

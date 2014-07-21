@@ -43,7 +43,7 @@ Activate the goenv:
 $ . local/bin/activate
 ```
 
-Packages installed with `go get` will now be installed in the `local` diretory.
+Packages installed with `go get` will now be installed in the `local` directory.
 
 Deactivate the goenv:
 

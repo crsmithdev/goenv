@@ -1,4 +1,22 @@
-// Test3.
+/*
+Package goenv provides a virtualenv-like GOPATH and PATH isolation for go.
+
+Usage is as follows:
+
+	Create a goenv:
+		goenv [NAME]
+
+	Activate the goenv:
+		. [NAME]/bin/activate
+
+	Deactivate the goenv:
+		deactivate
+
+Example:
+	goenv local
+	. local/bin/activate
+	deactivate
+*/
 package main
 
 import (
@@ -13,40 +31,39 @@ import (
 var template = `
 # This file must be used with "source bin/activate" or ". bin/activate"
 
-GOENV_NAME="__GOENV_NAME__"
-GOENV_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
-if [[ "$GOENV_ACTIVE" == "1" ]]; then
+if [[ -n "${GOENV+1}" ]]; then
 	deactivate
 fi
 
-export GOENV_ACTIVE=1
-export GOENV_PS1=$PS1
-export GOENV_GOPATH=$GOPATH
-export GOENV_PATH=$PATH
+export GOENV=__GOENV__
+export GOENV_OLDPS1=$PS1
+export GOENV_OLDGOPATH=$GOPATH
+export GOENV_OLDPATH=$PATH
 
-export GOPATH="$GOENV_DIR/$GOENV_NAME:$GOPATH"
-export PATH="$GOENV_DIR/bin:$PATH"
-export PS1="(${GOENV_NAME})${PS1}"
+export GOPATH=$GOENV:$GOPATH
+export PATH="$GOENV/bin:$PATH"
+export PS1="($(basename $GOENV))$PS1"
 
 deactivate() {
-	export PS1=$GOENV_PS1
-	export GOPATH=$GOENV_GOPATH
-	export PATH=$GOENV_PATH
+	export PS1=$GOENV_OLDPS1
+	export GOPATH=$GOENV_OLDGOPATH
+	export PATH=$GOENV_OLDPATH
 
-	unset GOENV_ACTIVE GOENV_PS1 GOENV_PATH GOENV_GOPATH
+	unset GOENV GOENV_OLDPS1 GOENV_OLDPATH GOENV_OLDGOPATH
 	unset -f deactivate
 }
 `
 
-func writeScript(path, name string) error {
+// writeScript writes the modifed script template.
+func writeScript(goenv, path string) error {
 
-	script := strings.Replace(template, "__GOENV_NAME__", name, -1)
+	script := strings.Replace(template, "__GOENV__", goenv, -1)
 	err := ioutil.WriteFile(path, []byte(script), 777)
 
 	return err
 }
 
+// createSubdirs creates the goenv directory structure.
 func createSubdirs(path string, names []string) error {
 
 	for _, name := range names {
@@ -59,12 +76,14 @@ func createSubdirs(path string, names []string) error {
 	return nil
 }
 
-func main() {
+func init() {
 
 	flag.Usage = func() {
 		fmt.Fprintf(os.Stderr, "Usage: goenv DEST_DIR\n")
 	}
+}
 
+func main() {
 	flag.Parse()
 
 	if flag.NArg() < 1 {
@@ -72,19 +91,26 @@ func main() {
 		os.Exit(1)
 	}
 
-	path := flag.Arg(0)
-	err := createSubdirs(path, []string{"src", "bin", "pkg"})
+	dir, err := os.Getwd()
 
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error creating directory structure: %s", err)
+		fmt.Fprintf(os.Stderr, "Error getting current directory: %s", err.Error())
+		os.Exit(1)
+	}
+
+	path := filepath.Join(dir, flag.Arg(0))
+	err = createSubdirs(path, []string{"src", "bin", "pkg"})
+
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error creating directories: %s", err.Error())
 		os.Exit(1)
 	}
 
 	scriptPath := filepath.Join(path, "bin/activate")
-	err = writeScript(scriptPath, filepath.Base(path))
+	err = writeScript(path, scriptPath)
 
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error writing activate script: %s", err)
+		fmt.Fprintf(os.Stderr, "Error writing activate script: %s", err.Error())
 		os.Exit(1)
 	}
 }

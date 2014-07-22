@@ -2,7 +2,7 @@
 
 ## What?
 
-Goenv is a go package that provides virtualenv-like functionality for Go.
+Goenv is a Go package that provides virtualenv-like functionality for Go projects.
 
 ## Why?
 
@@ -11,9 +11,7 @@ Because global dependencies are evil.
 ## Features
 
 - Identical basic functionality as virtualenv
-- Written (mostly) in Go
-- Installable as a Go package
-- No need to add any source / eval code to your shell init script
+- Written in Go, installable with `go get`
 
 ## Quick start
 

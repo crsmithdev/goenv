@@ -27,24 +27,64 @@ Install this package:
 $ go get github.com/crsmithdev/goenv
 ```
 
-Create (or enter) a directory and set up a goenv:
+Create a goenv:
 
 ```
-$ mkdir myproject
-$ cd myproject
-$ goenv local
+goenv myproject
+```
+
+You will then have a directory structure like this:
+
+```
+myproject
+|-- bin
+|-- pkg
+|-- src
 ```
 
 Activate the goenv:
 
 ```
-$ . local/bin/activate
+$ cd myproject
+$ . bin/activate
 ```
 
-Packages installed with `go get` will now be installed in the `local` directory.
+You can then add your own files:
 
-Deactivate the goenv:
+```
+myproject
+|-- bin
+|-- pkg
+|-- src
+    |-- github.com
+        |-- crsmithdev
+            |-- myproject
+                |-- myproject.go
+```
+
+And install other packages with `go get`:
+
+```
+go get github.com/hoisie/redis
+```
+```
+myproject
+|-- bin
+|-- pkg
+|-- src
+    |-- github.com
+        |-- crsmithdev
+            |-- myproject
+                |-- myproject.go
+        |-- hoisie
+            |-- redis
+                |-- ...
+```
+
+Finally, when finished, deactivate the goenv:
 
 ```
 deactivate
 ```
+
+Your GOPATH is now back to what it was before.

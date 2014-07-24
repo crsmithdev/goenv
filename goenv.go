@@ -17,7 +17,7 @@ Example:
 	. local/bin/activate
 	deactivate
 */
-package goenv
+package main
 
 import (
 	"flag"

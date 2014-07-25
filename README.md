@@ -30,7 +30,7 @@ $ go get github.com/crsmithdev/goenv
 Create a goenv:
 
 ```
-goenv myproject
+$ goenv myproject
 ```
 
 You will then have a directory structure like this:
@@ -65,7 +65,7 @@ myproject
 And install other packages with `go get`:
 
 ```
-go get github.com/hoisie/redis
+(myproject) $ go get github.com/hoisie/redis
 ```
 ```
 myproject
@@ -84,7 +84,7 @@ myproject
 Finally, when finished, deactivate the goenv:
 
 ```
-deactivate
+(myproject) $ deactivate
 ```
 
 Your GOPATH is now back to what it was before.

@@ -13,6 +13,8 @@ Go's package management expects that all go source files and packages will exist
 - Similar functionality to Python's virtualenv and virtualenvwrapper.
 - Separates development directory from import path - e.g., develop in `~/myproject`, but import from `github.com/me/myproject`
 - Isolates dependencies from other projects.
+- Does not break any packaging or import conventions.
+- Does not interfere with any `go` command functionality.
 - Written in Go, installable with `go get`.
 
 ## Quick start

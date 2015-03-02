@@ -1,32 +1,46 @@
 /*
-Package goenv provides a virtualenv-like GOPATH and PATH isolation for go.
+goenv provides isolated, virtual GOPATH environments for Go projects.
 
-Usage is as follows:
+Usage:
 
-	Create a goenv:
-		goenv [NAME]
+    goenv [command] [arguments]
 
-	Activate the goenv:
-		. [NAME]/bin/activate
+Commands:
 
-	Deactivate the goenv:
-		deactivate
+    init     initialize a goenv
 
-Example:
-	goenv local
-	. local/bin/activate
-	deactivate
+Use "goenv help [command]" for command-specific information.
+
+goenv: unrecognized command init
 */
+
 package main
 
 import (
+	"bytes"
 	"flag"
 	"fmt"
 	"os"
+	"text/template"
 )
+
+var usageTemplate = `
+Goenv provides isolated, virtual GOPATH environments for Go projects.
+
+Usage:
+
+    goenv [command] [arguments]
+
+Commands:
+{{ range . }}
+    {{ .Name | printf "%-8s" }} {{ .Short }}{{end}}
+
+Use "goenv help [command]" for command-specific information.
+`
 
 // Command is a command-line action.
 type Command struct {
+	Name    string
 	Usage   string
 	Short   string
 	Long    string
@@ -40,6 +54,7 @@ type Task interface {
 
 // a map of command names -> commands.
 var commands map[string]*Command
+var usageText string
 
 func init() {
 
@@ -47,9 +62,33 @@ func init() {
 		fmt.Fprintf(os.Stderr, "Usage: goenv DEST_DIR\n")
 	}
 
-	commands = map[string]*Command{
-		"init": &initCommand,
+	commands := make(map[string]*Command)
+
+	cmds := []*Command{
+		&initCommand,
 	}
+
+	for _, cmd := range cmds {
+		commands[cmd.Name] = cmd
+	}
+
+	tmpl := template.New("usage")
+	tmpl, err := tmpl.Parse(usageTemplate)
+
+	if err != nil {
+		panic(err)
+	}
+
+	var buf bytes.Buffer
+	err = tmpl.Execute(&buf, cmds)
+
+	if err != nil {
+		panic(err)
+	}
+
+	usageText = buf.String()
+	fmt.Println(usageText)
+
 }
 
 func main() {

@@ -1,5 +1,8 @@
 # goenv
 
+[![Travis](https://travis-ci.org/crsmithdev/goenv.svg?branch=master)](https://travis-ci.org/crsmithdev/goenv)
+[![GoDoc](https://godoc.org/github.com/crsmithdev/goenv?status.svg)](https://godoc.org/github.com/crsmithdev/goenv)
+
 ## What?
 
 Goenv is a Go package that provides virtualenv-like functionality for Go projects, isolating dependencies into workspaces for safer and simpler management.

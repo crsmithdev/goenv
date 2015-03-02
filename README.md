@@ -2,83 +2,55 @@
 
 ## What?
 
-Goenv is a Go package that provides virtualenv-like functionality for Go projects.
+Goenv is a Go package that provides virtualenv-like functionality for Go projects, isolating dependencies into workspaces for safer and simpler management.
 
 ## Why?
 
-Because global dependencies are evil.
+Go's package management expects that all go source files and packages will exist under a single system directory, GOPATH.  This makes it easy to install and find packages, but means that any  projects being worked on will share the same GOPATH, which can cause issues if different versions of packages are required and make it difficult to create isolated, reproducible builds.
 
 ## Features
 
-- Identical basic functionality as virtualenv
-- Written in Go, installable with `go get`
+- Similar functionality to Python's virtualenv and virtualenvwrapper.
+- Separates development directory from import path - you can work in `~/myproject`, but import from `github.com/me/myproject`
+- Isolates projct dependencies from other projects.
+- Written in Go, installable with `go get`.
 
 ## Quick start
 
 First, ensure your `PATH` includes the /bin directory in your global `GOPATH`, with something like:
 
-```script
+```shell
 PATH=PATH:$GOPATH/bin
 ```
 
 Install this package:
 
-```
+```shell
 $ go get github.com/crsmithdev/goenv
+```
+
+Create or enter your project directory:
+
+```shell
+$ mkdir -p ~/myproject && cd ~/myproject
 ```
 
 Create a goenv:
 
 ```
-$ goenv myproject
-```
-
-You will then have a directory structure like this:
-
-```
-myproject
-|-- bin
-|-- pkg
-|-- src
+$ goenv myproject github.com/me/myproject
 ```
 
 Activate the goenv:
 
 ```
-$ cd myproject
-$ . bin/activate
+$ . goenv/activate
 ```
 
-You can then add your own files:
-
-```
-myproject
-|-- bin
-|-- pkg
-|-- src
-    |-- github.com
-        |-- crsmithdev
-            |-- myproject
-                |-- myproject.go
-```
-
-And install other packages with `go get`:
+Install other packages with `go get` or other dependency managment tools.
 
 ```
 (myproject) $ go get github.com/hoisie/redis
-```
-```
-myproject
-|-- bin
-|-- pkg
-|-- src
-    |-- github.com
-        |-- crsmithdev
-            |-- myproject
-                |-- myproject.go
-        |-- hoisie
-            |-- redis
-                |-- ...
 ```
 
 Finally, when finished, deactivate the goenv:

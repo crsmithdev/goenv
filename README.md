@@ -23,43 +23,43 @@ Go's package management expects that all go source files and packages will exist
 
 First, ensure your `PATH` includes the /bin directory in your global `GOPATH`, with something like:
 
-```shell
+```bash
 PATH=PATH:$GOPATH/bin
 ```
 
 Install this package:
 
-```shell
+```bash
 $ go get github.com/crsmithdev/goenv
 ```
 
 Create or enter your project directory:
 
-```shell
+```bash
 $ mkdir -p ~/myproject && cd ~/myproject
 ```
 
 Create a goenv:
 
-```
+```bash
 $ goenv myproject github.com/me/myproject
 ```
 
 Activate the goenv:
 
-```
+```bash
 $ . goenv/activate
 ```
 
-Install other packages with `go get` or other dependency managment tools.
+Install packages with `go get` or other dependency managment tools.
 
-```
+```bash
 (myproject) $ go get github.com/hoisie/redis
 ```
 
-Finally, when finished, deactivate the goenv:
+When finished, deactivate the goenv:
 
-```
+```bash
 (myproject) $ deactivate
 ```
 
@@ -67,5 +67,5 @@ Your GOPATH is now back to what it was before.
 
 ## Todo
 
-- `destroy` and `help` commands
+- `destroy`command
 - Testing

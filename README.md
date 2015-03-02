@@ -60,3 +60,8 @@ Finally, when finished, deactivate the goenv:
 ```
 
 Your GOPATH is now back to what it was before.
+
+## Todo
+
+- `destroy` command
+- Testing

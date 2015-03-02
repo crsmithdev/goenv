@@ -57,17 +57,13 @@ var usageText string
 
 func init() {
 
-	flag.Usage = func() {
-		fmt.Fprintf(os.Stderr, "Usage: goenv DEST_DIR\n")
-	}
-
-	commands := make(map[string]*Command)
-
-	cmds := []*Command{
+	commands = make(map[string]*Command)
+	commandList := []*Command{
 		&initCommand,
+		&helpCommand,
 	}
 
-	for _, cmd := range cmds {
+	for _, cmd := range commandList {
 		commands[cmd.Name] = cmd
 	}
 
@@ -79,15 +75,17 @@ func init() {
 	}
 
 	var buf bytes.Buffer
-	err = tmpl.Execute(&buf, cmds)
+	err = tmpl.Execute(&buf, commands)
 
 	if err != nil {
 		panic(err)
 	}
 
 	usageText = buf.String()
-	fmt.Println(usageText)
 
+	flag.Usage = func() {
+		fmt.Println(usageText)
+	}
 }
 
 func main() {
@@ -104,6 +102,7 @@ func main() {
 
 	if !found {
 		fmt.Fprintf(os.Stderr, "goenv: unrecognized command %s\n", args[0])
+		flag.Usage()
 		os.Exit(1)
 	}
 

@@ -42,7 +42,7 @@ var initCommand = Command{
 	Name:    "init",
 	Short:   "initialize a goenv",
 	Usage:   "init [-g][-s][-w] [project name] [import path]",
-	Long:    "init long",
+	Long:    "TODO",
 	GetTask: NewInitTask,
 }
 

@@ -9,8 +9,6 @@ Commands:
 
     help     get help for a command
     init     initialize a goenv
-
-Use "goenv help [command]" for command-specific information.
 */
 package main
 

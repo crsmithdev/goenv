@@ -7,11 +7,10 @@ Usage:
 
 Commands:
 
+    help     get help for a command
     init     initialize a goenv
 
 Use "goenv help [command]" for command-specific information.
-
-goenv: unrecognized command init
 */
 package main
 
@@ -24,7 +23,7 @@ import (
 )
 
 var usageTemplate = `
-Goenv provides isolated, virtual GOPATH environments for Go projects.
+goenv provides isolated, virtual GOPATH environments for Go projects.
 
 Usage:
 

@@ -65,5 +65,5 @@ Your GOPATH is now back to what it was before.
 
 ## Todo
 
-- `destroy` command
+- `destroy` and `help` commands
 - Testing

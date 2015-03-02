@@ -19,7 +19,7 @@ if [[ -n "${GOENV+1}" ]]; then
 	deactivate
 fi
 
-export GOENV {{ .ProjectName }}
+export GOENV={{ .ProjectName }}
 export GOENV_OLDPS1=$PS1
 export GOENV_OLDGOPATH=$GOPATH
 export GOENV_OLDPATH=$PATH
@@ -49,7 +49,7 @@ var initCommand = Command{
 // InitTask initializes a goenv.
 type InitTask struct {
 	ProjectName string // the name of the project, e.g. "goenv".
-	ProjectPath string // the import path of the project, e.g. "github.com/crsmithdev/goenv"
+	ImportPath  string // the import path of the project, e.g. "github.com/crsmithdev/goenv"
 	GoenvDir    string // the goenv dir to create, default "~/.goenv/[ProjectName]"
 	ScriptDir   string // the directory in which to write the activate script, default "./goenv"
 	WorkingDir  string // the current working directory.
@@ -82,7 +82,7 @@ func NewInitTask(args []string) (Task, error) {
 
 	return &InitTask{
 		ProjectName: args[0],
-		ProjectPath: args[1],
+		ImportPath:  args[1],
 		GoenvDir:    *goenvDir,
 		ScriptDir:   *scriptDir,
 		WorkingDir:  workingDir,
@@ -120,13 +120,13 @@ func (task *InitTask) Run() error {
 // makePaths creates directory paths for a goenv.
 func (task *InitTask) makePaths() error {
 
-	wPath := filepath.Join(task.GoenvDir, "src", task.ProjectPath)
+	srcPath := filepath.Join(task.GoenvDir, "src", task.ImportPath)
 
 	var dirs = []string{
 		filepath.Dir(task.ScriptDir),
 		filepath.Join(task.GoenvDir, "bin"),
 		filepath.Join(task.GoenvDir, "pkg"),
-		wPath,
+		srcPath,
 	}
 
 	for _, dir := range dirs {
@@ -139,10 +139,10 @@ func (task *InitTask) makePaths() error {
 		}
 	}
 
-	err := os.Remove(wPath)
-	err = os.Symlink(task.WorkingDir, wPath)
+	err := os.Remove(srcPath)
+	err = os.Symlink(task.WorkingDir, srcPath)
 
-	fmt.Printf("goenv: symlinked %s -> %s\n", task.WorkingDir, wPath)
+	fmt.Printf("goenv: symlinked %s -> %s\n", task.WorkingDir, srcPath)
 
 	return err
 }

@@ -63,8 +63,6 @@ When finished, deactivate the goenv:
 (myproject) $ deactivate
 ```
 
-Your GOPATH is now back to what it was before.
-
 ## Todo
 
 - `destroy`command

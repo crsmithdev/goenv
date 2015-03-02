@@ -13,7 +13,6 @@ Use "goenv help [command]" for command-specific information.
 
 goenv: unrecognized command init
 */
-
 package main
 
 import (

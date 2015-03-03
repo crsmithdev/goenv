@@ -141,8 +141,6 @@ func (task *InitTask) Run() error {
 
 	fmt.Println("goenv: initializing...")
 
-	task.PrintArgs()
-
 	if err := task.writeScript(); err != nil {
 		return err
 	}

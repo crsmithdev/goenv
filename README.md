@@ -61,8 +61,6 @@ deactivate
 
 ### Init
 
-Test
-
 ```bash
 Usage: goenv init [-g][-s][-p][-n] [import path]
 
@@ -80,16 +78,16 @@ Init supports the following options:
         the name of the environment, defaulting to the name
         of the current working directory.
 
--g
-the GOPATH to create, defaulting to ~/.goenv/<name>
+    -g
+        the GOPATH to create, defaulting to ~/.goenv/<name>
 
--p
-the project path, defaulting to the current working
-directory.
+    -p
+        the project path, defaulting to the current working
+        directory.
 
--s
-the full path to the initialization script, defaulting
-         to ./goenv/activate.j
+    -s
+        the full path to the initialization script, defaulting
+        to ./goenv/activate.
 ```
 
 

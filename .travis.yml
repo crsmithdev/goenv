@@ -8,5 +8,10 @@ go:
  - release
   - tip
 
+install:
+  - go get -v github.com/onsi/ginkgo/ginkgo
+  - go get -v github.com/onsi/gomega
+  - export PATH=$PATH:$HOME/gopath/bin
+
 script:
- - go test -v ./...
+ - make test

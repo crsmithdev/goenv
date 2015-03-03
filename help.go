@@ -5,21 +5,24 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"strings"
 	"text/template"
 )
 
 var helpCommand = Command{
-	Name:    "help",
-	Short:   "get help for a command",
-	Usage:   "help [command]",
-	Long:    "TODO",
+	Name:  "help",
+	Short: "get help for a command",
+	Usage: "help [command]",
+	Long: `
+Wait, why are you geting help for the help command?
+`,
 	GetTask: NewHelpTask,
 }
 
 var helpTemplate = `
 Usage: goenv {{.Usage}}
 
-{{.Long}}
+{{.Long | trim}}
 `
 
 // HelpTask initializes a goenv.
@@ -55,7 +58,10 @@ func (task *HelpTask) Run() error {
 	}
 
 	tmpl := template.New("help")
-	tmpl, err := tmpl.Parse(helpTemplate)
+	tmpl.Funcs(template.FuncMap{
+		"trim": strings.TrimSpace,
+	})
+	tmpl, err := tmpl.Parse(strings.TrimSpace(helpTemplate) + "\n\n")
 
 	if err != nil {
 		return err

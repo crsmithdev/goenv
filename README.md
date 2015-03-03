@@ -30,40 +30,71 @@ PATH=PATH:$GOPATH/bin
 Install this package:
 
 ```bash
-$ go get github.com/crsmithdev/goenv
+go get github.com/crsmithdev/goenv
 ```
 
-Create or enter your project directory:
+Within your project directory, reate a goenv:
 
 ```bash
-$ mkdir -p ~/myproject && cd ~/myproject
-```
-
-Create a goenv:
-
-```bash
-$ goenv myproject github.com/me/myproject
+goenv github.com/me/myproject
 ```
 
 Activate the goenv:
 
 ```bash
-$ . goenv/activate
+. goenv/activate
 ```
 
 Install packages with `go get` or other dependency managment tools.
 
 ```bash
-(myproject) $ go get github.com/hoisie/redis
+go get github.com/hoisie/redis
 ```
 
 When finished, deactivate the goenv:
 
 ```bash
-(myproject) $ deactivate
+deactivate
 ```
+
+## Commands
+
+### Init
+
+Test
+
+```bash
+Usage: goenv init [-g][-s][-p][-n] [import path]
+
+Init initializes a goenv and creates an initialization script that
+activates it.  This script creates, if needed, a GOPATH directory
+structure, symlinks the project into that structure at the specified
+input path, and then alters the current session's GOPATH environment
+variable to point to it.
+
+The goenv can be deactivated with 'deactivate'.
+
+Init supports the following options:
+
+    -n
+        the name of the environment, defaulting to the name
+        of the current working directory.
+
+-g
+the GOPATH to create, defaulting to ~/.goenv/<name>
+
+-p
+the project path, defaulting to the current working
+directory.
+
+-s
+the full path to the initialization script, defaulting
+         to ./goenv/activate.j
+```
+
+
 
 ## Todo
 
-- `destroy`command
-- Testing
+- other commands?
+- tests

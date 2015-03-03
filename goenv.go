@@ -1,5 +1,5 @@
 /*
-goenv provides isolated, virtual GOPATH environments for Go projects.
+goenv provides isolated GOPATH environments for Go projects.
 
 Usage:
 
@@ -13,15 +13,15 @@ Commands:
 package main
 
 import (
-	"bytes"
 	"flag"
 	"fmt"
 	"os"
+	"strings"
 	"text/template"
 )
 
 var usageTemplate = `
-goenv provides isolated, virtual GOPATH environments for Go projects.
+Goenv provides isolated GOPATH environments for Go projects.
 
 Usage:
 
@@ -63,29 +63,27 @@ func init() {
 	for _, cmd := range commandList {
 		commands[cmd.Name] = cmd
 	}
+}
+
+func usage() {
 
 	tmpl := template.New("usage")
-	tmpl, err := tmpl.Parse(usageTemplate)
+	tmpl, err := tmpl.Parse(strings.TrimSpace(usageTemplate) + "\n\n")
 
 	if err != nil {
 		panic(err)
 	}
 
-	var buf bytes.Buffer
-	err = tmpl.Execute(&buf, commands)
+	err = tmpl.Execute(os.Stderr, commands)
 
 	if err != nil {
 		panic(err)
-	}
-
-	usageText = buf.String()
-
-	flag.Usage = func() {
-		fmt.Println(usageText)
 	}
 }
 
 func main() {
+
+	flag.Usage = usage
 	flag.Parse()
 
 	args := flag.Args()

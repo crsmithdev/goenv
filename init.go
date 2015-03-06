@@ -90,7 +90,7 @@ func NewInitTask(args []string) (Task, error) {
 	flags := flag.NewFlagSet("init", flag.ExitOnError)
 
 	goPath := flags.String("g", "", "the GOPATH to create")
-	projectName := flag.String("n", "", "the project name")
+	projectName := flags.String("n", "", "the project name")
 	scriptPath := flags.String("s", "./goenv/activate", "the full path to the initialization script")
 	projectPath := flags.String("p", "", "the project path")
 

@@ -23,37 +23,37 @@ Go's package management expects that all go source files and packages will exist
 
 First, ensure your `PATH` includes the /bin directory in your global `GOPATH`, with something like:
 
-```bash
+```
 PATH=PATH:$GOPATH/bin
 ```
 
 Install this package:
 
-```bash
+```
 go get github.com/crsmithdev/goenv
 ```
 
 Within your project directory, reate a goenv:
 
-```bash
+```
 goenv github.com/me/myproject
 ```
 
 Activate the goenv:
 
-```bash
+```
 . goenv/activate
 ```
 
 Install packages with `go get` or other dependency managment tools.
 
-```bash
+```
 go get github.com/hoisie/redis
 ```
 
 When finished, deactivate the goenv:
 
-```bash
+```
 deactivate
 ```
 
@@ -61,7 +61,7 @@ deactivate
 
 ### Init
 
-```bash
+```
 Usage: goenv init [-g][-s][-p][-n] [import path]
 
 Init initializes a goenv and creates an initialization script that
@@ -90,9 +90,16 @@ Init supports the following options:
         to ./goenv/activate.
 ```
 
+### Help
+
+```
+Usage: goenv help [command]
+
+Help gets detailed usage information for a command.
+```
 
 
 ## Todo
 
-- other commands?
-- tests
+- `destroy` command
+- ???

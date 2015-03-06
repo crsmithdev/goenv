@@ -14,7 +14,7 @@ var helpCommand = Command{
 	Short: "get help for a command",
 	Usage: "help [command]",
 	Long: `
-Wait, why are you geting help for the help command?
+Help gets detailed usage information for a command.
 `,
 	GetTask: NewHelpTask,
 }

@@ -33,7 +33,7 @@ Install this package:
 go get github.com/crsmithdev/goenv
 ```
 
-Within your project directory, reate a goenv:
+Within your project directory, create a goenv:
 
 ```
 goenv github.com/me/myproject
